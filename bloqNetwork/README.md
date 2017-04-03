@@ -1,7 +1,7 @@
 # Bloqs: A real estate trading ecosystem
 
 A business network created with Fabric composer that allows trading in partial real estate ownership certificates (Bloqs).
-Plan is to launch a pilot with *real* real estate summer 2017.
+Plan is to launch a pilot during the summer (2017) with *real* real estate.
 
 
 ## Participants, assets and process flow
@@ -11,12 +11,17 @@ Plan is to launch a pilot with *real* real estate summer 2017.
 3. The ("FundManager") can issue new ("Bloq") by creating a ("BloqEmission") transaction
 4. The ("Notary") appointed during (3) approves the emission by creating a ("Sign") transaction.
 5. The ("Bloqholder") appointed during (3) holds all the Bloqs, Bloqs can be transferred to other ("Bloqholder") by creating a ("BloqTransfer") transaction.
-6. The ("Bloqholder") can check it's balance by creating a ("GetHolderBloqcounts") transaction
+6. A ("Bloqholder") can check it's balance by creating a ("GetHolderBloqcounts") transaction
 
 Note that:
 Assets can also be created directly without the transaction functions.
 This technically allows Bloqholders to update Bloqs or create the out-of-thin air.
 The transfer transaction however checks Bloq validity, only transfers created with the BloqTransfer function will be legally binding.
+
+![Entities](/images/legend.png?raw=true "Entities")
+![Process flow](/images/process.png?raw=true "Process flow")
+
+See also [What is a Bloq on NotaryNodes](http://notarynodes.readthedocs.io/en/latest/bloqs/overview.html).
 
 ## TODO's
 
