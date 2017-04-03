@@ -1,0 +1,20 @@
+{
+  "name": "bloq-network",
+  "version": "1.0.0",
+  "description": "Bloq, the real estate trading ecosystem",
+  "main": "index.js",
+  "scripts": {
+    "preinstall": "composer --version || echo 'Please first run npm install -g composer-cli' ",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "createArchive": "composer archive create --archiveFile bloqNetwork.bna --sourceType dir --sourceName .",
+    "fabric": "./scripts/docker.sh",
+    "deploy": "npm run createArchive && composer network deploy --archiveFile bloqNetwork.bna --enrollId WebAppAdmin --enrollSecret DJY27pEnl16d",
+    "participants": "./scripts/add_participants.sh > ./scripts/enrollment_data.txt",
+    "assets": "./scripts/add_assets.sh",
+    "update": "npm run createArchive && composer network update --archiveFile bloqNetwork.bna --enrollId WebAppAdmin --enrollSecret DJY27pEnl16d",
+    "list": "composer network list -n bloq-network --enrollId WebAppAdmin --enrollSecret DJY27pEnl16d",
+    "install": "npm run fabric && sleep 5 && npm run deploy && sleep 5 && npm run participants"
+  },
+  "author": "NotaryNodes/Bloqhouse",
+  "license": "Apache license 2.0"
+}

@@ -1,0 +1,107 @@
+/**
+ * Access Control List
+ *
+ * Copyright Bloqhouse NL BV. 2017 All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *		 http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+rule Fund {
+  description: "Only fund managers can create funds, they can only create them with their own id"
+  participant(p): "org.notarynodes.bloqNetwork.FundManager"
+  operation: CREATE
+  resource(r): "org.notarynodes.bloqNetwork.Fund"
+  condition: ( r.fundManager.getIdentifier() == p.getIdentifier() )
+  action: ALLOW
+}
+rule CreateFund {
+  description: "Only fund managers can create funds, they can only create them with their own id"
+  participant(p): "org.notarynodes.bloqNetwork.FundManager"
+  operation: CREATE
+  resource(r): "org.notarynodes.bloqNetwork.CreateFund"
+  condition: ( r.creator.getIdentifier() == p.getIdentifier() )
+  action: ALLOW
+}
+
+rule Signature {
+  description: "Only notaries can sign, they can only sign with their own id"
+  participant(p): "org.notarynodes.bloqNetwork.Notary"
+  operation: CREATE
+  resource(r): "org.notarynodes.bloqNetwork.Signature"
+  condition: ( r.signer.getIdentifier() == p.getIdentifier() )
+  action: ALLOW
+}
+rule Sign {
+  description: "Only notaries can sign, they can only sign with their own id"
+  participant(p): "org.notarynodes.bloqNetwork.Notary"
+  operation: CREATE
+  resource(r): "org.notarynodes.bloqNetwork.Sign"
+  condition: ( r.signer.getIdentifier() == p.getIdentifier() )
+  action: ALLOW
+}
+
+rule Bloq1 {
+  description: "Fund managers can create bloqs to create funded bloqs, only if they own the emission"
+  participant(p): "org.notarynodes.bloqNetwork.FundManager"
+  operation: CREATE
+  resource(r): "org.notarynodes.bloqNetwork.Bloq"
+  condition: ( (r.fund.fundManager.getIdentifier() == p.getIdentifier()) && (r.emission == true) && (r.signer != undefined) && (r.origin == undefined) )
+  action: ALLOW
+}
+rule BloqEmission {
+  description: "Fund managers can create bloqs to create funded bloqs, only if they own the emission"
+  participant(p): "org.notarynodes.bloqNetwork.FundManager"
+  operation: CREATE
+  resource(r): "org.notarynodes.bloqNetwork.BloqEmission"
+  condition: ( r.fund.fundManager.getIdentifier() == p.getIdentifier() )
+  action: ALLOW
+}
+
+rule Bloq2 {
+  description: "Bloqholders can create bloqs to transfer ownership, but only if they own the preceding bloq"
+  participant(p): "org.notarynodes.bloqNetwork.BloqHolder"
+  operation: CREATE
+  resource(r): "org.notarynodes.bloqNetwork.Bloq"
+  condition: ( (r.origin.holder.getIdentifier() == p.getIdentifier()) && (r.emission == false) && (r.signer == undefined) )
+  action: ALLOW
+}
+rule Bloq2Update {
+  description: "Bloqholders can create bloqs to transfer ownership, but only if they own the preceding bloq"
+  participant(p): "org.notarynodes.bloqNetwork.BloqHolder"
+  operation: UPDATE
+  resource(r): "org.notarynodes.bloqNetwork.Bloq"
+  condition: ( (r.holder.getIdentifier() == p.getIdentifier()) && (r.destinations == undefined) && (r.end == undefined) )
+  action: ALLOW
+}
+rule BloqTransfer {
+  description: "Bloqholders can create bloqs to transfer ownership, only if they own the preceding bloq"
+  participant(p): "org.notarynodes.bloqNetwork.BloqHolder"
+  operation: CREATE
+  resource(r): "org.notarynodes.bloqNetwork.BloqTransfer"
+  condition: ( r.origin.holder.getIdentifier() == p.getIdentifier() )
+  action: ALLOW
+}
+rule BloqCount {
+  description: "Bloqholders can check their balance"
+  participant(p): "org.notarynodes.bloqNetwork.BloqHolder"
+  operation: CREATE
+  resource(r): "org.notarynodes.bloqNetwork.GetHolderBloqcounts"
+  condition: ( r.holder.getIdentifier() == p.getIdentifier() )
+  action: ALLOW
+}
+
+rule Regulator {
+    description: "Anyone for now, in the future e.g. the regulator can view everything that is happening"
+    participant: "ANY"
+    operation: READ
+    resource: "org.notarynodes.bloqNetwork"
+    action: ALLOW
+}

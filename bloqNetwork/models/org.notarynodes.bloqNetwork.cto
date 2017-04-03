@@ -1,0 +1,99 @@
+/**
+ * Model file
+ *
+ * Copyright Bloqhouse NL BV. 2017 All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *		 http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+namespace org.notarynodes.bloqNetwork
+
+participant Notary identified by notaryId {
+  o String  notaryId
+}
+
+participant FundManager identified by fundManagerId {
+  o String  fundManagerId
+}
+
+participant Regulator identified by regulatorId {
+  o String  regulatorId
+}
+
+participant App identified by appId {
+  o String  appId
+}
+
+participant BloqHolder identified by bloqHolderId {
+  o String  bloqHolderId
+}
+
+asset Fund identified by fundId {
+  o String          fundId
+  --> FundManager   fundManager
+  --> Notary        signer
+  o String          properties
+  o DateTime        timestamp
+}
+
+transaction CreateFund identified by transactionId{
+  o String          transactionId
+  --> FundManager   creator
+  --> Notary        signer
+  o String          fundId
+  o String          properties
+}
+
+asset Signature identified by signatureId {
+  o String          signatureId
+  --> Notary        signer
+  o DateTime        timestamp
+}
+
+transaction Sign identified by transactionId{
+  o String          transactionId
+  --> Notary        signer
+  o String          assetType
+  o String          assetId
+}
+
+asset Bloq identified by bloqId {
+  o String          bloqId
+  --> BloqHolder    holder
+  --> Fund          fund
+  o Integer         count
+  o DateTime        start
+  o Boolean         emission
+  --> Notary        signer optional
+  --> Bloq          origin optional
+  o Bloq[]          destinations optional
+  o DateTime        end optional
+}
+
+transaction BloqEmission identified by transactionId{
+  o String          transactionId
+  --> Fund          fund
+  --> Notary        signer
+  --> BloqHolder    escrow
+  o Integer         count
+}
+
+transaction BloqTransfer identified by transactionId{
+  o String          transactionId
+  --> Bloq          origin
+  --> BloqHolder[]  destinations
+  o Integer[]       counts
+}
+
+transaction GetHolderBloqcounts identified by transactionId{
+  o String          transactionId
+  --> BloqHolder    holder
+}
