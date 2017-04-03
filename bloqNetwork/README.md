@@ -1,7 +1,7 @@
 # Bloqs: A real estate trading ecosystem
 
 A business network created with Fabric composer that allows trading in partial real estate ownership certificates (Bloqs).
-Plan is to launch a pilot during the summer (2017) with *real* real estate.
+Plan is to launch a pilot during the summer (2017) with *real* real estate, a group of Dutch notaries a real estate fund manager and the Bloqhouse exchange app.
 
 
 ## Participants, assets and process flow
