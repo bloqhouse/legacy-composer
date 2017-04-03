@@ -18,8 +18,8 @@ Assets can also be created directly without the transaction functions.
 This technically allows Bloqholders to update Bloqs or create the out-of-thin air.
 The transfer transaction however checks Bloq validity, only transfers created with the BloqTransfer function will be legally binding.
 
-![Entities](/images/legend.png?raw=true "Entities")
-![Process flow](/images/process.png?raw=true "Process flow")
+![Entities](/bloqNetwork/images/legend.png?raw=true "Entities")
+![Process flow](/bloqNetwork/images/process.png?raw=true "Process flow")
 
 See also [What is a Bloq on NotaryNodes](http://notarynodes.readthedocs.io/en/latest/bloqs/overview.html).
 
