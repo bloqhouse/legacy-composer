@@ -33,5 +33,5 @@ See also [What is a Bloq on NotaryNodes](http://notarynodes.readthedocs.io/en/la
 * Change errors thrown such that transactions are not added to transaction registry if an error is thrown
 * Consistent and complete error catching
 * Auto increment id for new transactions
-* Permissioning for adding participants (Notary > All, Fund manager,App > BloqHolder)
+* Permissioning for adding participants (Notary>Any && Fund manager,App>BloqHolder)
 * Implement cashflows and rent distribution
