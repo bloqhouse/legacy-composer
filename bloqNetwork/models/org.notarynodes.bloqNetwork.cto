@@ -93,7 +93,7 @@ transaction BloqTransfer identified by transactionId{
   o Integer[]       counts
 }
 
-transaction GetHolderBloqcounts identified by transactionId{
+transaction GetHolderBloqs identified by transactionId{
   o String          transactionId
   --> BloqHolder    holder
 }

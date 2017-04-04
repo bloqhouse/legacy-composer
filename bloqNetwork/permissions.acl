@@ -89,11 +89,11 @@ rule BloqTransfer {
   condition: ( r.origin.holder.getIdentifier() == p.getIdentifier() )
   action: ALLOW
 }
-rule BloqCount {
+rule HolderBloqs {
   description: "Bloqholders can check their balance"
   participant(p): "org.notarynodes.bloqNetwork.BloqHolder"
   operation: CREATE
-  resource(r): "org.notarynodes.bloqNetwork.GetHolderBloqcounts"
+  resource(r): "org.notarynodes.bloqNetwork.GetHolderBloqs"
   condition: ( r.holder.getIdentifier() == p.getIdentifier() )
   action: ALLOW
 }

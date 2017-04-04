@@ -71,7 +71,7 @@ function checkBloqValidity(bloq){
 
 /**
  * Create fund
- * @param {org.notarynodes.bloqNetwork.CreateFund} transaction - the transaction transaction
+ * @param {org.notarynodes.bloqNetwork.CreateFund} transaction
  * @transaction
  */
 function onCreateFund(transaction) {
@@ -90,7 +90,7 @@ function onCreateFund(transaction) {
 
 /**
  * Sign asset
- * @param {org.notarynodes.bloqNetwork.Sign} transaction - the transaction transaction
+ * @param {org.notarynodes.bloqNetwork.Sign} transaction
  * @transaction
  */
 function onSign(transaction) {
@@ -121,7 +121,7 @@ function onSign(transaction) {
 
 /**
  * Bloq emission
- * @param {org.notarynodes.bloqNetwork.BloqEmission} transaction - the transaction transaction
+ * @param {org.notarynodes.bloqNetwork.BloqEmission} transaction
  * @transaction
  */
 function onBloqEmission(transaction) {
@@ -148,7 +148,7 @@ function onBloqEmission(transaction) {
 
 /**
  * Bloq transfer
- * @param {org.notarynodes.bloqNetwork.BloqTransfer} transaction - the transaction transaction
+ * @param {org.notarynodes.bloqNetwork.BloqTransfer} transaction
  * @transaction
  */
 function onBloqTransfer(transaction) {
@@ -188,28 +188,40 @@ function onBloqTransfer(transaction) {
 
 /**
  * Bloq transfer
- * @param {org.notarynodes.bloqNetwork.GetHolderBloqcounts} transaction - the transaction transaction
+ * @param {org.notarynodes.bloqNetwork.GetHolderBloqs} transaction
  * @transaction
  */
-function onGetHolderBloqcounts(transaction) {
-  var counts = {};
+function onGetHolderBloqs(transaction) {
+  var holderBloqs = {};
   return getAssetRegistry('org.notarynodes.bloqNetwork.Bloq')
     .then(function (registry) {
       return registry.getAll();
     })
     .then(function (bloqs) {
+      console.log("started counting...");
       for(var i = 0; i < bloqs.length; i++){
-        console.log("started counting...");
-        if ((bloqs[i].holder.getIdentifier().toString() == transaction.holder.getIdentifier().toString()) && (bloqs[i].end == undefined)){
+        if (bloqs[i].holder.getIdentifier().toString() == transaction.holder.getIdentifier().toString()){
           // todo implement check if bloqs are valid
+          var bloq = {};
           var fund = bloqs[i].fund.getIdentifier().toString();
-          var count = bloqs[i].count.toString();
-          console.log("bloqf: "+fund + " - "+ count);
-          if (fund in counts) { counts[fund] = parseInt(counts[fund]) + parseInt(count);}
-          else { counts[fund] = parseInt(count); }
+          bloq["fund"] = fund;
+          bloq["id"] = bloqs[i].getIdentifier().toString();
+          bloq["count"] = bloqs[i].count.toString();
+          bloq["spend"] = bloqs[i].end != undefined;
+          if (fund in holderBloqs) {
+            holderBloqs[fund]["bloqs"].push(bloq);
+          }
+          else {
+            holderBloqs[fund] = {};
+            holderBloqs[fund]["sum"] = 0;
+            holderBloqs[fund]["bloqs"] = [bloq];
+          }
+          if (!bloq["spend"]){
+            holderBloqs[fund]["sum"] = parseInt(holderBloqs[fund]["sum"]) + parseInt(bloq["count"]);
+          }
         }
       }
-      console.log(counts);
-      return counts;
+      console.log(holderBloqs);
+      return holderBloqs;
     });
 }

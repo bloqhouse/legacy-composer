@@ -27,6 +27,9 @@ See also [What is a Bloq on NotaryNodes](http://notarynodes.readthedocs.io/en/la
 
 * Create update transactions for Fund
 * Turn Fund/properties into a property asset list instead of a string
+* Allow multiple origins for BloqTransfer function
+* onGetHolderBloqcounts bloq validity check
+* Implement funding window
 * Create legal documents that make transactions legally binding and direct CRUDs not legally binding
 * Update permissions file (replace 2 level deep references, they don't seem to work)
 * Check atomicity of all functions (no partial transactions)
