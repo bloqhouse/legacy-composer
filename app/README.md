@@ -33,4 +33,4 @@ $ node index.js
 
 ## Check the Bloq registry from the commandline
 
-$ composer network list -n bloq-network -i WebAppAdmin -s DJY27pEnl16d -r 'org.notarynodes.bloqNetwork.Bloqs'
+$ composer network list -n bloq-network -i WebAppAdmin -s DJY27pEnl16d -r 'org.notarynodes.bloqNetwork.Bloq'

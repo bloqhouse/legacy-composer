@@ -12,7 +12,7 @@
     "preinstall": "composer --version || echo 'Please first run npm install -g composer-cli' ",
     "test": "echo \"Error: no test specified\" && exit 1",
     "local-fabric": "./scripts/docker.sh",
-    "deploy-bloqnetwork": "npm run createArchive && composer network deploy --archiveFile bloqNetwork.bna --enrollId WebAppAdmin --enrollSecret DJY27pEnl16d",
+    "deploy-bloqnetwork": "composer network deploy --archiveFile bloqNetwork.bna --enrollId WebAppAdmin --enrollSecret DJY27pEnl16d",
     "add-participants": "./scripts/add_participants.sh",
     "all": "npm run local-fabric && sleep 5 && npm run deploy-bloqnetwork && sleep 5 && npm run add-participants"
   },
