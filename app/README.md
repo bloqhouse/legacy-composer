@@ -18,10 +18,12 @@ $ npm install
 ## Install fabric and deploy cluster
 
 $ npm run local-fabric
+
 $ npm run deploy-bloqnetwork
+
 $ npm run add-participants
 
-OR
+**OR**
 
 $ npm run all
 
