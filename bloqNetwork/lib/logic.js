@@ -73,6 +73,7 @@ function checkBloqValidity(bloq){
  * Create fund
  * @param {org.notarynodes.bloqNetwork.CreateFund} transaction
  * @transaction
+ * @return {Promise}
  */
 function onCreateFund(transaction) {
   return getAssetRegistry('org.notarynodes.bloqNetwork.Fund')
@@ -84,6 +85,9 @@ function onCreateFund(transaction) {
       newFund.properties = transaction.properties;
       newFund.timestamp = new Date();
       return registry.add(newFund);
+    })
+    .catch(function (err) {
+      throw new Error(err); // this results only in an unhandled rejection instead of a caught error..
     });
 }
 
@@ -92,6 +96,7 @@ function onCreateFund(transaction) {
  * Sign asset
  * @param {org.notarynodes.bloqNetwork.Sign} transaction
  * @transaction
+ * @return {Promise} 
  */
 function onSign(transaction) {
   // throw new Error("This does work")
@@ -113,8 +118,8 @@ function onSign(transaction) {
       return registry.add(newSignature);
     })
     .catch(function (err) {
-      //Promise.reject(new Error(err));
-      throw new Error("Could not create signature, does the object exist and does it belong to this notary?"); // this results only in an unhandled rejection instead of a caught error..
+      //Promise.reject(new Error("Could not create signature, does the object exist and does it belong to this notary?"));
+      throw new Error(err); // this results only in an unhandled rejection instead of a caught error..
     });
 }
 
@@ -123,6 +128,7 @@ function onSign(transaction) {
  * Bloq emission
  * @param {org.notarynodes.bloqNetwork.BloqEmission} transaction
  * @transaction
+ * @return {Promise}
  */
 function onBloqEmission(transaction) {
   return checkSig(transaction.fund)
@@ -142,6 +148,9 @@ function onBloqEmission(transaction) {
       newBloq.emission = true;
       newBloq.signer = transaction.signer;
       return registry.add(newBloq);
+    })
+    .catch(function (err) {
+      throw new Error(err); // this results only in an unhandled rejection instead of a caught error..
     });
 }
 
@@ -150,6 +159,7 @@ function onBloqEmission(transaction) {
  * Bloq transfer
  * @param {org.notarynodes.bloqNetwork.BloqTransfer} transaction
  * @transaction
+ * @return {Promise}
  */
 function onBloqTransfer(transaction) {
   if (transaction.destinations.length != transaction.counts.length){ throw new Error("No. destinations doesn't match no. counts");}
@@ -187,9 +197,10 @@ function onBloqTransfer(transaction) {
 }
 
 /**
- * Bloq transfer
+ * GetHolderBloqs
  * @param {org.notarynodes.bloqNetwork.GetHolderBloqs} transaction
  * @transaction
+ * @return {Promise}
  */
 function onGetHolderBloqs(transaction) {
   var holderBloqs = {};

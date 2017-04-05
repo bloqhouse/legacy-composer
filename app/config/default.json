@@ -1,0 +1,8 @@
+{
+  "admin": {
+       "participantId" : "WebAppAdmin",
+       "participantPwd" :"DJY27pEnl16d",
+       "businessNetworkIdentifier" : "bloq-network",
+       "connectionProfile" :"defaultProfile"
+    }
+}

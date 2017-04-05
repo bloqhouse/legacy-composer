@@ -14,6 +14,14 @@
  * limitations under the License.
  */
 
+ rule ALL {
+     description: "For testing purposes allow all for any"
+     participant: "ANY"
+     operation: ALL
+     resource: "org.notarynodes.bloqNetwork"
+     action: ALLOW
+ }
+
 rule Fund {
   description: "Only fund managers can create funds, they can only create them with their own id"
   participant(p): "org.notarynodes.bloqNetwork.FundManager"

@@ -1,0 +1,21 @@
+{
+  "name": "bloq-network-app",
+  "version": "1.0.0",
+  "description": "Connecting to the bloq network",
+  "main": "index.js",
+  "dependencies": {
+    "composer-admin": "latest",
+    "composer-client": "latest",
+    "config": "^1.24.0"
+  },
+  "scripts": {
+    "preinstall": "composer --version || echo 'Please first run npm install -g composer-cli' ",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "local-fabric": "./scripts/docker.sh",
+    "deploy-bloqnetwork": "npm run createArchive && composer network deploy --archiveFile bloqNetwork.bna --enrollId WebAppAdmin --enrollSecret DJY27pEnl16d",
+    "add-participants": "./scripts/add_participants.sh",
+    "all": "npm run local-fabric && sleep 5 && npm run deploy-bloqnetwork && sleep 5 && npm run add-participants"
+  },
+  "author": "NotaryNodes/Bloqhouse",
+  "license": "Apache license 2.0"
+}
