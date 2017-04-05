@@ -27,7 +27,8 @@ const BusinessNetworkConnection = require('composer-client').BusinessNetworkConn
 var bizNetworkConnection = new BusinessNetworkConnection();
 var bizNetworkDefinition = undefined;
 
-var fundId = 'herengracht176';
+var fundId = 'Herengracht179';
+
 var fundManager = 'realestatepro';
 var notary = 'honesty';
 var escrow = 'escrow';
@@ -92,7 +93,7 @@ function assets(){
     .then(() => {
 
       var random = Math.floor(Math.random() * 999999999999).toString();
-      var tx = {'$class':'org.notarynodes.bloqNetwork.BloqTransfer', 'origin':bloq, 'destinations':['escrow','jeroen','tim'], 'counts':['60','30','10'], 'transactionId':random};
+      var tx = {'$class':'org.notarynodes.bloqNetwork.BloqTransfer', 'origin':bloq, 'destinations':[escrow,bh1,bh2], 'counts':['60','30','10'], 'transactionId':random};
       var serializer = bizNetworkDefinition.getSerializer();
       var resource = serializer.fromJSON(tx);
       console.log("Submitting: ");console.log(tx);
